@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Observações e Elogios";
+}
+<div class="text-center">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        @using (Html.BeginForm("Observacao", "Relatorios", FormMethod.Get))
+        {
+            <p>
+                <select name="turmaId" id="turmaId" asp-items="ViewBag.Turma"></select>
+                <input type="submit" value="Procurar" />
+            </p>
+        }
+    </div>
+</div>
+@if (Model != null)
+{
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>
+                    Professor
+                </th>
+                <th>
+                    Disciplina
+                </th>
+                <th>
+                    Observação
+                </th>
+                <th class="d-none d-lg-table-cell">
+                    Autorizar
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                string selectRow = "";
+                if (item.VisivelProf == true)
+                {
+                    selectRow = "item-selecionado";
+                }
+                else
+                {
+                    selectRow = "item-vermelho";
+                }
+                <tr class="@selectRow">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Disci_Turma.Professor.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Disci_Turma.Disciplina.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observacao)
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @Html.DisplayFor(modelItem => item.VisivelProf)
+                    </td>
+                    @if (item.VisivelProf != true)
+                    {
+                        <td>
+                            <a asp-action="Liberar" asp-route-id="@item.Codigo">Liberar</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a asp-action="Bloquear" asp-route-id="@item.Codigo">Bloquear</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

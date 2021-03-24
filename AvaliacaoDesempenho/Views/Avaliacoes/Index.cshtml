@@ -1,0 +1,129 @@
+﻿@model AvaliacaoDesempenho.Models.ViewModels.AvaliacaoIndexData
+@{
+    ViewData["Title"] = "Avaliação de Satisfação";
+}
+<h1>Avaliação de Satisfação</h1>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Disciplina
+            </th>
+            <th>
+                Professor
+            </th>
+            <th class="d-none d-sm-table-cell">
+                Finalizado
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Avaliacao)
+        {
+            string selectedRow = "";
+            if (item.Codigo == (int?)ViewData["AvaliacaoId"])
+            {
+                selectedRow = "item-selecionado";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disci_Turma.Disciplina.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disci_Turma.Professor.Nome)
+                </td>
+                <td class="d-none d-sm-table-cell">
+                    @Html.DisplayFor(modelItem => item.Finalizado)
+                    @if (item.Finalizado == true)
+                    {
+                        <label class="text-success">Respondido</label>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Index" asp-route-id="@item.Codigo">Selecionar</a>
+                    @if (item.Finalizado == false)
+                    {
+                        <a class="btn btn-outline-success btn-sm" asp-controller="Questao_Avaliacao" asp-action="Questao" asp-route-id="@item.Codigo">Iniciar | </a>
+                        @if (item.Disci_Turma.Turma.Curso.Nivel == "TÉCNICO")
+                        {
+                            <a class="btn btn-outline-danger btn-sm" asp-controller="Avaliacoes" asp-action="Dispensado" asp-route-id="@item.Codigo">Dispensado</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+@if (ViewBag.ControleMatricula == true)
+{
+    <p class="h3 text-success text-center">Você finalizou todas avaliações. Obrigado!</p>
+
+}
+
+@if (Model.Questao_Avaliacaos != null)
+{
+    <h3>Questões avaliadas</h3>
+    <table class="table table-sm">
+        <tr>
+            <th class="d-none d-sm-table-cell">Disciplina</th>
+            <th>Professor</th>
+            <th>Questão</th>
+            <th>Nota</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Questao_Avaliacaos)
+        {
+            <tr>
+                <td class="d-none d-sm-table-cell">
+                    @item.Avaliacao.Disci_Turma.Disciplina.Nome
+                </td>
+                <td>
+                    @item.Avaliacao.Disci_Turma.Professor.Nome
+                </td>
+                <td>
+                    @item.Questionario.Descricao
+                </td>
+                @if (item.Nota == 0)
+
+                {
+                    <td>
+                        Nunca
+                    </td>
+
+                }
+                @if (item.Nota == 1)
+                {
+                    <td>
+                        Raramente
+                    </td>
+
+                }
+                @if (item.Nota == 2)
+                {
+                    <td>
+                        Eventualmente
+                    </td>
+
+                }
+                @if (item.Nota == 3)
+                {
+                    <td>
+                        Sempre
+                    </td>
+
+                }
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" title="Reavaliar Questão" asp-controller="Questao_Avaliacao" asp-action="Edit" asp-route-id="@item.Codigo">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                        </svg>
+                    </a>
+                </td>
+
+
+            </tr>
+        }
+    </table>
+}

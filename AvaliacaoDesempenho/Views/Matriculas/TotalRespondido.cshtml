@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Acompanhar avaliação geral";
+    decimal respondido = ViewBag.TotalRespondido;
+    decimal naoRespondido = ViewBag.TotalNaoRespondido;
+    decimal total = respondido + naoRespondido;
+    decimal porcResp = respondido * (100 / total);
+    decimal porcNaoResp = naoRespondido * (100 / total);
+}
+<div class="text-center">
+    <h1>@ViewBag.Title</h1>
+        <p>Total respondido: <strong>@ViewBag.TotalRespondido (@porcResp.ToString("N2") %)</strong></p>
+        <p>Total não respondido: <strong>@ViewBag.TotalNaoRespondido (@porcNaoResp.ToString("N2") %)</strong></p>
+        <hr />
+        <div class="col-12 col-sm-12">
+            <canvas id="grafico"></canvas>
+        </div>
+</div>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById('grafico').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Total respondido', 'Total não respondido'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [@ViewBag.TotalRespondido, @ViewBag.TotalNaoRespondido],
+                    backgroundColor: [
+                        '#489bd9',
+                        '#f11616'
+                    ],
+                    borderColor: [
+                        '#489bd9',
+                        '#f11616'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}

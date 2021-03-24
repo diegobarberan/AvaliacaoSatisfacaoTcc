@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Disci_Turma>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Disciplinas da Turma: @ViewData["NomeTurma"]</h1>
+<p>    
+    <a class="btn btn-outline-primary" asp-action="Create">Adinionar Disciplina</a>
+</p>
+<p>
+    <a target="_blank" class="btn btn-outline-success" asp-controller="Disci_Turma" asp-action="GerarPDF" asp-route-id="@ViewBag.TurmaCod">Gerar PDF</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="d-none d-lg-table-cell">
+                @Html.DisplayNameFor(model => model.Turma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Disciplina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Professor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="d-none d-lg-table-cell">
+                    @Html.DisplayFor(modelItem => item.Turma.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disciplina.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Professor.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Excluir</a>
+                </td>
+            </tr>
+        }        
+    </tbody>
+</table>
+
+<p>
+    <a class="btn btn-outline-primary" asp-controller="Turmas" asp-action="Index">Voltar para Turmas</a>
+</p>

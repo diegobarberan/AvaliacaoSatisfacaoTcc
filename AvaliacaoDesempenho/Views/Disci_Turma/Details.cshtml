@@ -1,0 +1,35 @@
+﻿@model AvaliacaoDesempenho.Models.Disci_Turma
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes das Disciplinas da Turma</h1>
+
+<div>    
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Turma)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Turma.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Disciplina)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Disciplina.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Professor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Professor.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Codigo">Editar</a> | 
+    <a class="btn btn-outline-primary" asp-action="Index" asp-route-id="@Model.TurmaId">Voltar para lista</a>
+</div>

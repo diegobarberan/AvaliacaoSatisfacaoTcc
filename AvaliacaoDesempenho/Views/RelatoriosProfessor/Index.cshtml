@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.ViewModels.ResultadoQuestao>
+
+@{
+    List<string> _nota = new List<string>();
+    foreach (var q in Model)
+    {
+        _nota.Add(q.Nota.ToString("N2").Replace(",", "."));
+    }
+    var quest = ViewBag.questionario as List<Questionario>;
+
+
+    ViewData["Title"] = "Resultado Geral";
+}
+
+<h1 class="text-center">Resultado geral do Professor</h1>
+<p class="text-center">@ViewBag.NomeProfessor</p>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <canvas id="grafico"></canvas>
+        <p class="text-center mt-2">Nunca:0 | Raramente:1 | Eventualmente:2 | Sempre:3</p>
+    </div>
+    <div class="col-12 col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Código
+                    </th>
+                    <th>
+                        Questão
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in quest)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Codigo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var ctx = document.getElementById('grafico').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+
+            data: {
+                labels: [@Html.Raw("'" + String.Join("','", (Model.Select(x => x.Codigo).ToList())) + "'")],
+                datasets: [{
+                    label: 'Código da Questão',
+                    data: [@Html.Raw(String.Join(",", (_nota.ToList())))],
+                    backgroundColor: '#a3130d',
+                    borderColor: '#a3130d',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 3,
+                            min: 0,
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}

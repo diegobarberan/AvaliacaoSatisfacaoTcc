@@ -1,0 +1,74 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registrar-se";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" name="f1">
+            <h4>Criar uma nova conta.</h4>
+            <hr />
+            <!-- <div asp-validation-summary="All" class="text-danger"></div> -->
+            <div class="form-group">
+                <label asp-for="Input.Nome"></label>
+                <input asp-for="Input.Nome" class="form-control" />
+                <span asp-validation-for="Input.Nome" class="text-danger"></span>
+            </div>            
+
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" id="Email" onblur="validacaoEmail(f1.Email)"/>
+                <span id="msgEmail"></span>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Senha"></label>
+                <input asp-for="Input.Senha" class="form-control" />
+                <span asp-validation-for="Input.Senha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmSenha"></label>
+                <input asp-for="Input.ConfirmSenha" class="form-control" />
+                <span asp-validation-for="Input.ConfirmSenha" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-outline-primary" onclick="return validacaoEmail(f1.Email);">Registrar</button>
+        </form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use outro serviço para se registrar.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            Não há serviços de autenticação externa configurados. Consulte <a href="https://go.microsoft.com/fwlink/?LinkID=532715"> este artigo </a>
+                            para obter detalhes sobre como configurar este aplicativo ASP.NET para oferecer suporte ao logon por meio de serviços externos.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-outline-primary" name="provider" value="@provider.Name" title="Faça login usando a sua @provider.DisplayName conta"><img class="rounded-circle" src="~/imagens/facebookEtec.png" /></button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Avaliação de Satisfação</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-toggleable-lg bg-etec border-bottom box-shadow mb-3">
+            <div class="container">
+                <a target="_blank" href="https://www.facebook.com/etecde.taubate/"><img class="rounded-circle mr-1" src="~/imagens/facebookEtec.png" alt="Facebook Etec Taubaté" /></a>
+                <a target="_blank" href="https://www.instagram.com/etectaubate/"><img class="rounded-circle" src="~/imagens/instagranEtec.png" alt="Instagran Etec Taubaté" /></a>
+                <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.IsInRole("Coordenador") || User.IsInRole("Professor/Coord"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class=" dropdown-toggle nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Cadastro
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Cursos" asp-action="Index">Curso</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Disciplinas" asp-action="Index">Disciplina</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Matriculas" asp-action="Index">Matrícula</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Professors" asp-action="Index">Professor</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Questionarios" asp-action="Index">Questionário</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Turmas" asp-action="Index">Turma</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class=" dropdown-toggle nav-link" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Acompanhar Avaliação
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Matriculas" asp-action="PorTurma">Por Turma</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Matriculas" asp-action="TotalRespondido">Geral</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class=" dropdown-toggle nav-link" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Relatórios
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AppUserRoles" asp-action="Index">Acesso de Professores</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Relatorios" asp-action="Index">Resultado Geral</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Relatorios" asp-action="PorTurma">Resultado Por Disciplina/Turma</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Relatorios" asp-action="PorQuestaoDisciplina">Resultado Por Questão/Disciplina</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Relatorios" asp-action="Observacao">Observação por Turma</a>
+                                </div>
+                            </li>
+
+                        }
+                        @if (User.IsInRole("Aluno"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="AlunoMatriculas" asp-action="Edit">Verificar Matriculas</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Professor") || User.IsInRole("Professor/Coord"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class=" dropdown-toggle nav-link" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Relatórios Professor
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                                    <a class="dropdown-item" asp-area="" asp-controller="RelatoriosProfessor" asp-action="Index">Resultado Geral</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RelatoriosProfessor" asp-action="PorTurma">Resultado Por Disciplina/Turma</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RelatoriosProfessor" asp-action="PorQuestaoDisciplina">Resultado Por Questão/Disciplina</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RelatoriosProfessor" asp-action="Observacao">Observação</a>
+                                </div>
+                            </li>
+
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <p>
+                &copy; 2020 - Avaliação de Satisfação - Versão:2020.1.02
+            </p>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

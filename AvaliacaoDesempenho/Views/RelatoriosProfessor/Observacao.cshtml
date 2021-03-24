@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Observações e Elogios";
+}
+<div class="text-center">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Turma
+            </th>
+            <th>
+                Disciplina
+            </th>
+            <th>
+                Observação
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {           
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disci_Turma.Turma.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Disci_Turma.Disciplina.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Observacao)
+                </td>                
+            </tr>
+        }
+    </tbody>
+</table>
+

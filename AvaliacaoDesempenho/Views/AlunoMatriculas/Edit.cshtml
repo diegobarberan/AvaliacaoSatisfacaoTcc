@@ -1,0 +1,70 @@
+﻿@model AvaliacaoDesempenho.Models.Matricula
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Verificar Matrícula</h1>
+
+<h4>Matrícula do Aluno</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-4 list-group-item-secondary">
+                @Html.DisplayNameFor(model => model.EmailInst)
+            </dt>
+            <dd class="col-sm-8 list-group-item-secondary">
+                @Html.DisplayFor(model => model.EmailInst)
+            </dd>
+            <dt class="col-sm-4 list-group-item-primary">
+                @Html.DisplayNameFor(model => model.Data)
+            </dt>
+            <dd class="col-sm-8 list-group-item-primary">
+                @Html.DisplayFor(model => model.Data)
+            </dd>
+            <dt class="col-sm-4 list-group-item-secondary">
+                @Html.DisplayNameFor(model => model.Turma)
+            </dt>
+            <dd class="col-sm-8 list-group-item-secondary">
+                @Html.DisplayFor(model => model.Turma.Nome)
+            </dd>
+            @{
+                if (Model.UsuarioId != null)
+                {
+                    <dt class="col-sm-4 list-group-item-primary">
+                        @Html.DisplayNameFor(model => model.Usuario)
+                    </dt>
+                    <dd class="col-sm-8 list-group-item-primary">
+                        @Html.DisplayFor(model => model.Usuario.Nome)
+                    </dd>
+                }
+            }
+        </dl>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RM" />
+            @{
+                if (Model.UsuarioId == null)
+                {
+                    <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn btn-outline-primary" />
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <a asp-controller="Avaliacoes" asp-action="Index" class="btn btn-outline-primary">Iniciar Avaliação</a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Voltar para Home</a>
+                    </div>
+                }
+            }
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

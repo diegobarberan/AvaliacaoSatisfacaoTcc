@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.AppUserRole>
+
+@{
+    ViewData["Title"] = "Lista de Professores que já acessaram o sistema";
+}
+
+<h1>Lista de Professores que já acessaram o sistema</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Usuário
+            </th>
+            <th>
+                Perfil
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

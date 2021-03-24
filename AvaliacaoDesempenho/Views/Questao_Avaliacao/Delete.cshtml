@@ -1,0 +1,39 @@
+﻿@model AvaliacaoDesempenho.Models.Questao_Avaliacao
+
+@{
+    ViewData["Title"] = "Excluir Questão";
+}
+
+<h1>Excluir</h1>
+
+<h3>Tem certeza de que deseja excluir?</h3>
+<div>
+    <h4>Questao_Avaliacao</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nota)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nota)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Avaliacao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Avaliacao.MatriculaId)
+        </dd class>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Questionario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Questionario.Descricao)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Codigo" />
+        <input type="submit" value="Excluir" class="btn btn-outline-danger" /> |
+        <a class="btn btn-outline-primary" asp-action="Index">Voltar para Lista</a>
+    </form>
+</div>

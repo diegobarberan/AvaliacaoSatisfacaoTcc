@@ -1,0 +1,82 @@
+﻿@model AvaliacaoDesempenho.Models.ViewModels.QuestaoIndexData
+
+@{
+    ViewData["Title"] = "Reavaliar Questão";
+}
+
+<h1>Avaliação</h1>
+
+<h4>Questão: <strong>@Model.Questao_Avaliacao.QuestionarioId</strong></h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Questao_Avaliacao.Codigo" />
+            <input type="hidden" asp-for="Questao_Avaliacao.AvaliacaoId" />
+            <input type="hidden" asp-for="Questao_Avaliacao.QuestionarioId" />
+
+            <div class="form-group">
+                <p>
+                    Professor: <strong>@Model.Questao_Avaliacao.Avaliacao.Disci_Turma.Professor.Nome</strong>
+                    Disciplina: <strong>@Model.Questao_Avaliacao.Avaliacao.Disci_Turma.Disciplina.Nome</strong>
+                </p>
+
+                <p class="h4" style="background-color: #e3f2fd;">
+                    @Model.Questao_Avaliacao.Questionario.Descricao
+                </p>
+                <p><span id="msgRadio" class="h4"></span></p>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="Questao_Avaliacao.Nota" name="Questao_Avaliacao.Nota" value="0" class="form-check-input" />
+                    <label class="form-check-label" for="Questao_Avaliacao.Nota">Nunca</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="Questao_Avaliacao.Nota1" name="Questao_Avaliacao.Nota" value="1" class="form-check-input" />
+                    <label class="form-check-label" for="Questao_Avaliacao.Nota1">Raramente</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="Questao_Avaliacao.Nota2" name="Questao_Avaliacao.Nota" value="2" class="form-check-input" />
+                    <label class="form-check-label" for="Questao_Avaliacao.Nota2">Eventualmente</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="Questao_Avaliacao.Nota3" name="Questao_Avaliacao.Nota" value="3" class="form-check-input" />
+                    <label class="form-check-label" for="Questao_Avaliacao.Nota3">Sempre</label>
+                </div>                
+            </div>
+            <div class="form-group">
+                <input type="submit" id="btnSubmit" value="Salvar" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById("btnSubmit").onclick = function () {
+            var radios = document.getElementsByName("Questao_Avaliacao.Nota");
+            var teste = false;
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    teste = true;
+                    break;
+                }
+                else {
+                    teste = false;
+                    continue;
+                }
+            }
+            if (teste == false) {
+                document.getElementById("msgRadio").innerHTML = "<font color='red'>Você não selecionou nenhuma opção.</font>";
+                return false;
+            }
+            else {
+                return true;
+            }
+
+        };
+    </script>
+}

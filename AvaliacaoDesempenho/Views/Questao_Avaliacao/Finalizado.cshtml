@@ -1,0 +1,16 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Avaliacao>
+
+@{
+    ViewData["Title"] = "Finalizado";
+}
+
+<h1>Finalizado com sucesso!</h1>
+<div>
+    <p> Você finalizou com sucesso a seguinte avalição:</p>
+    <p>Professor: <strong>@Model.First().Disci_Turma.Professor.Nome</strong></p>
+    <p>Disciplina: <strong>@Model.First().Disci_Turma.Disciplina.Nome</strong></p>
+</div>
+<div>
+    <p>Verifique se existem mais disciplinas a serem avaliadas em avaliações</p>
+    <a class="btn btn-outline-primary" asp-controller="Avaliacoes" asp-action="Index">Avaliações</a>
+</div>

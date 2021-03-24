@@ -1,0 +1,131 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.ViewModels.ResultadoPorQuestao>
+
+@{
+    int totalTurma = 0;
+    int totalRespondido = 0;
+    int media = 0;
+
+    if (Model != null)
+    {
+        totalTurma = ViewBag.TotalTurma;
+        totalRespondido = ViewBag.TotalRespondido;
+        media = totalTurma / 2;
+    }
+
+    ViewData["Title"] = "Resultado por Questão/Disciplina";
+}
+
+<div class="text-center">
+    <h1>@ViewBag.Title</h1>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        @using (Html.BeginForm("PorQuestaoDisciplina", "Relatorios", FormMethod.Get))
+        {<p>
+                <select name="turmaId" id="turmaId" asp-items="ViewBag.Turma"></select>
+                <input type="submit" value="Procurar" />
+            </p>
+            <hr />
+        }
+    </div>
+    @if (ViewBag.Disciplina != null)
+    {
+        <div class="col-12 col-md-6">
+            @using (Html.BeginForm("PorQuestaoDisciplina", "Relatorios", FormMethod.Get))
+            {<p>
+                    <select name="disciTurmaId" id="disciTurmaId" asp-items="ViewBag.Disciplina"></select>
+                    <input type="submit" value="Procurar" />
+                </p>
+                <hr />
+            }
+        </div>
+    }
+</div>
+@if (Model != null)
+{
+    <p class="text-center">Turma: <strong>@ViewBag.NomeTurma</strong> | Professor: <strong>@ViewBag.NomeProf</strong>  |  Disciplina: <strong>@ViewBag.NomeDisc</strong></p>
+    @if (totalRespondido >= media)
+    {
+        <p class="text-center text-primary">Total de avaliações @totalRespondido</p>
+    }
+    else
+    {
+        <p class="text-center text-danger">Total de avaliações @totalRespondido</p>
+    }
+    @foreach (var item in Model)
+    {
+        string cod = "cod" + item.Codigo;
+        <div class="row mb-2">
+            <div class="col-12 col-md-6">
+                <canvas id="@cod"></canvas>
+            </div>
+            <div class="col-12 col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Código
+                            </th>
+                            <th>
+                                Questão
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Questao)
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    @section Scripts{
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        @foreach (var item in Model)
+        {
+            string cod = "cod" + item.Codigo;
+            string chart = "myChart" + item.Codigo;
+            string ctx = "ctx" + item.Codigo;
+
+            <script>
+            var @ctx = document.getElementById('@cod').getContext('2d');
+            var @chart = new Chart(@ctx, {
+            type: 'bar',
+
+            data: {
+                labels: ["Nunca", "Raramente", "Eventualmente", "Sempre"],
+                datasets: [{
+                    label: 'Respostas',
+                    data: [@item.TotalNunca, @item.TotalRaramente, @item.TotalEventualmente, @item.TotalSempre],
+                    backgroundColor: ['#FF0000', '#FFFF00', '#32CD32', '#006400'],
+                    borderColor: ['#FF0000', '#FFFF00', '#32CD32', '#006400'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+            });
+
+            </script>
+        }
+
+    }
+
+
+}

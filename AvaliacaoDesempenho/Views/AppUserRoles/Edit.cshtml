@@ -1,0 +1,30 @@
+﻿@model AvaliacaoDesempenho.Models.AppUserRole
+
+@{
+    ViewData["Title"] = "Editar - Perfil Usuário";
+}
+
+<h1>Editar - Perfil Usuário</h1>
+
+<h4>Perfil Usuário</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="RoleId" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-outline-primary" asp-action="Index">Voltar para Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

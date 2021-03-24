@@ -1,0 +1,23 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Erro.</h1>
+<h2 class="text-danger">Um erro ocorreu durante o processamento do seu pedido.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Erro interno do sistema</h3>
+<p>
+    Desculpe-nos pelo ocorrido, infelizmente o sistema não conseguiu processar seu pedido.
+</p>
+<p>
+    Para que possamos o mais rápido possível resolver este problema, favor enviar um e-mail para <strong>e125ti@cps.sp.gov.br</strong> nos informando o problema,
+    informar qual sua solicitação antes do erro, quanto mais informações do sistema mais rápido conseguiremos resolver o problema.
+</p>

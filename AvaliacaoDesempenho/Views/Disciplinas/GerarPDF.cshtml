@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Disciplina>
+
+@{
+    ViewData["Title"] = "Lista de Disciplinas - PDF";
+}
+<p>
+    <button class="btn btn-outline-success" onclick="salvarPDF()">Salvar PDF</button>
+</p>
+<div id="pdfContent">
+    <img src="~/imagens/Etec.png" class="rounded mx-auto d-block" alt="Logotipo Etec Taubaté">
+    <h1 class="text-center">Lista de Disciplinas - PDF</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.0/jspdf.umd.min.js" crossorigin="anonymous"></script>
+    <script>
+        function salvarPDF() {
+            var element = document.getElementById('pdfContent');
+            var opt = {
+                margin: 1,
+                filename: 'Disciplinas.pdf',
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // New Promise-based usage:
+            html2pdf().from(element).set(opt).save();
+        }
+    </script>
+}
+

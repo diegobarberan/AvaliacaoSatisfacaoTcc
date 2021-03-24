@@ -1,0 +1,74 @@
+﻿@model IEnumerable<AvaliacaoDesempenho.Models.Matricula>
+
+@{
+    ViewData["Title"] = "Lista de Matrículas";
+}
+
+<h1>@ViewBag.Title</h1>
+@using (Html.BeginForm("Index", "Matriculas", FormMethod.Get))
+{
+    <p>
+        <select name="id" id="id" asp-items="ViewBag.Turma"></select>
+        <input type="submit" value="Procurar" />
+    </p>
+    <hr />
+}
+<p>
+    <a class="btn btn-outline-primary" asp-action="Create">Nova Matrícula</a>
+</p>
+@if (Model != null)
+{
+<p>
+    <a target="_blank" class="btn btn-outline-success" asp-action="GerarPDF" asp-route-id="@ViewBag.TurmaId">Gerar PDF</a>
+</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailInst)
+                </th>
+                <th class="d-none d-lg-table-cell">
+                    @Html.DisplayNameFor(model => model.Data)
+                </th>
+                <th class="d-none d-lg-table-cell">
+                    @Html.DisplayNameFor(model => model.ControleAvaliacao)
+                </th>
+                <th class="d-none d-lg-table-cell">
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Turma)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailInst)
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @Html.DisplayFor(modelItem => item.Data)
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @Html.DisplayFor(modelItem => item.ControleAvaliacao)
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @Html.DisplayFor(modelItem => item.Usuario.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Turma.Nome)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RM">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.RM">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.RM">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}

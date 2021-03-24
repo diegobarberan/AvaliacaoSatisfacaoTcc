@@ -1,0 +1,36 @@
+﻿@model AvaliacaoDesempenho.Models.AppRole
+
+@{
+    ViewData["Title"] = "Detalhes Perfil";
+}
+
+<h1>Detalhes Perfil</h1>
+
+<div>
+    <h4>Perfil</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NormalizedName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NormalizedName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ConcurrencyStamp)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-outline-primary" asp-action="Index">Voltar para Lista</a>
+</div>

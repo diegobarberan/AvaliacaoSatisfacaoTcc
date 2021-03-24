@@ -1,0 +1,33 @@
+﻿@model AvaliacaoDesempenho.Models.ViewModels.EmailData
+
+@{
+    ViewData["Title"] = "Reenviar E-mail de confirmação";
+}
+
+<h1>@ViewBag.Title</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (ViewBag.Mensagem != null)
+        {
+            <p class="text-danger">@ViewBag.Mensagem</p>
+        }
+        <form asp-action="Index" name="f1">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" onblur="validacaoEmail(f1.Email)" />
+                <span class="text-danger" id="msgEmail"></span>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Enviar" class="btn btn-outline-primary" onclick="return validacaoEmail(f1.Email);" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
