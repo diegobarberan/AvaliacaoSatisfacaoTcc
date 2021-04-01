@@ -37,8 +37,8 @@ namespace AvaliacaoDesempenho.Controllers
             {
                 return NotFound();
             }
-            CodTurma = id;
-            NomeTurma = _context.Turma.Find(id).Nome;
+            //CodTurma = id;            
+            //NomeTurma = _context.Turma.Find(id).Nome;
             var applicationDbContext = _context.Disci_Tuma
                 .Include(d => d.Disciplina)
                 .Include(d => d.Professor)
@@ -46,7 +46,7 @@ namespace AvaliacaoDesempenho.Controllers
                 .Where(d => d.TurmaId == id)
                 .OrderBy(a => a.Disciplina.Nome);
 
-            TempData.Keep("CodTurma");
+            //TempData.Keep("CodTurma");
             ViewData["TurmaCod"] = id;
             return View(await applicationDbContext.ToListAsync());
         }

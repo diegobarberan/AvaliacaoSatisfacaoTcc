@@ -6,12 +6,12 @@ using System.Text;
 
 namespace AvaliacaoSatisfacaoTeste
 {
-    public class InMemoryControllerTest : ControllerTeste
+    public class SqliteItemsControllerTest : ControllerTeste
     {
-        public InMemoryControllerTest()
+        public SqliteItemsControllerTest()
             : base(
                 new DbContextOptionsBuilder<ApplicationDbContext>()
-                    .UseInMemoryDatabase("TestDatabase")
+                    .UseSqlite("Filename=Test.db")
                     .Options)
         {
         }
