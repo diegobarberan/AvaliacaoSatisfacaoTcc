@@ -84,8 +84,8 @@ namespace AvaliacaoDesempenho.Controllers
                 .Include(d => d.Professor)
                 .Include(d => d.Turma)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
-            CodTurma = disci_Turma.TurmaId;
-            TempData.Keep("CodTurma");
+            //CodTurma = disci_Turma.TurmaId;
+            //TempData.Keep("CodTurma");
             if (disci_Turma == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace AvaliacaoDesempenho.Controllers
         public async Task<IActionResult> Create([Bind("Codigo,TurmaId,DisciplinaId,ProfessorId")] Disci_Turma disci_Turma)
         {
             CodTurma = disci_Turma.TurmaId;
-            TempData.Keep("CodTurma");
+            //TempData.Keep("CodTurma");
             if (ModelState.IsValid)
             {
                 var _disci_Turma = _context.Disci_Tuma
