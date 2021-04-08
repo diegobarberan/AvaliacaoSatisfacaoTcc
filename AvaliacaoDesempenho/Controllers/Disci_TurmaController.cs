@@ -37,8 +37,10 @@ namespace AvaliacaoDesempenho.Controllers
             {
                 return NotFound();
             }
-            //CodTurma = id;            
-            //NomeTurma = _context.Turma.Find(id).Nome;
+            //Para rodar os teste é necessario comentar o os atributos CodTurma e NomeTurma
+            CodTurma = id;            
+            NomeTurma = _context.Turma.Find(id).Nome;
+            TempData.Keep("CodTurma");
             var applicationDbContext = _context.Disci_Tuma
                 .Include(d => d.Disciplina)
                 .Include(d => d.Professor)
@@ -46,7 +48,6 @@ namespace AvaliacaoDesempenho.Controllers
                 .Where(d => d.TurmaId == id)
                 .OrderBy(a => a.Disciplina.Nome);
 
-            //TempData.Keep("CodTurma");
             ViewData["TurmaCod"] = id;
             return View(await applicationDbContext.ToListAsync());
         }
@@ -84,8 +85,9 @@ namespace AvaliacaoDesempenho.Controllers
                 .Include(d => d.Professor)
                 .Include(d => d.Turma)
                 .FirstOrDefaultAsync(m => m.Codigo == id);
-            //CodTurma = disci_Turma.TurmaId;
-            //TempData.Keep("CodTurma");
+            //Para rodar os teste é necessario comentar o os atributos CodTurma e NomeTurma
+            CodTurma = disci_Turma.TurmaId;
+            TempData.Keep("CodTurma");
             if (disci_Turma == null)
             {
                 return NotFound();
@@ -113,8 +115,9 @@ namespace AvaliacaoDesempenho.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Codigo,TurmaId,DisciplinaId,ProfessorId")] Disci_Turma disci_Turma)
         {
+            //Para rodar os teste é necessario comentar o os atributos CodTurma
             CodTurma = disci_Turma.TurmaId;
-            //TempData.Keep("CodTurma");
+            TempData.Keep("CodTurma");
             if (ModelState.IsValid)
             {
                 var _disci_Turma = _context.Disci_Tuma
